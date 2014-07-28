@@ -9,7 +9,7 @@ class Graph {
 public:
 	Graph() {}
 	virtual ~Graph() {}
-	size_t size() {
+	size_t size() const {
 		return nodes.size();
 	}
 

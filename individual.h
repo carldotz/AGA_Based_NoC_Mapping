@@ -2,6 +2,8 @@
 #define INDIVIDUAL_H
 
 #include "mapping_result.h"
+#include "acg.h"
+#include "nag.h"
 #include <random>
 
 class Individual {
@@ -9,12 +11,12 @@ public:
 	typedef std::size_t size_type;
 	typedef unsigned int genetic;
 
-	explicit Individual(size_t cs) : chromosome_size(cs) {}
+	explicit Individual(const ACG *,const NAG *);
 	Individual(const Individual &);
 	Individual& operator=(const Individual &);
 	virtual ~Individual() {}
 
-	virtual genetic* code(Mapping_Result);
+//	virtual genetic* code(Mapping_Result);
 	virtual Mapping_Result decode(genetic*);
 	virtual void crossover(Individual &);
 	virtual void mutation();
@@ -26,10 +28,13 @@ public:
 	bool operator<(const Individual &) const;
 	bool operator>(const Individual &) const;
 
-private:
+protected:
 	double fitness;
-	genetic * chromosome;
+	const ACG *acg;
+	const NAG *nag;
 	size_t chromosome_size;
+	size_t real_genetic_size;
+	genetic * chromosome;
 	Mapping_Result phenotype;
 	float p_crossover = 0.8;
 	float p_mutation = 0.05;

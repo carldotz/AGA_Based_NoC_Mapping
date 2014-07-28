@@ -10,6 +10,7 @@ public:
 	typedef NAG_Node::local local;
 	NAG() : Graph() {}
 	NAG(const line, const line);
+	std::shared_ptr<NAG_Node> operator[](std::size_t) const;
 protected:
 	void add_node(local,local);
 private:

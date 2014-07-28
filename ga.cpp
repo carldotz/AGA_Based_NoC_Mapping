@@ -2,11 +2,11 @@
 #include <vector>
 #include <algorithm>
 
-GA::GA(ACG *a,NAG *n,size_t s,size_t mnig,double mi) :
+GA::GA(const ACG *a,const NAG *n,size_t s,size_t mnig,double mi) :
 	Algorithms(a,n),size(s),max_no_improved_generation(mnig),min_improved(mi) {
 	while(individuals.size() < size)
 	{
-		individuals.push_back(Individual(nag->size()));
+		individuals.push_back(Individual(acg,nag));
 	}
 }
 

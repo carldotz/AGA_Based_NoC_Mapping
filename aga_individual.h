@@ -6,7 +6,7 @@
 class AGA_Individual : public Individual
 {
 public:
-	AGA_Individual(size_t s) : Individual(s) {}
+	AGA_Individual(const ACG *a,const NAG *n) : Individual(a,n) {}
 };
 
 #endif // AGA_INDIVIDUAL_H

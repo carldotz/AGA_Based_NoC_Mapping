@@ -17,7 +17,7 @@ void ACG::add_node(ACG_Node::no_type n)
 	nodes.push_back(make_shared<ACG_Node>(n));
 }
 
-shared_ptr<ACG_Node> ACG::operator[](std::size_t i)
+shared_ptr<ACG_Node> ACG::operator[](std::size_t i) const
 {
 	return std::dynamic_pointer_cast<ACG_Node>(nodes[i]);
 }

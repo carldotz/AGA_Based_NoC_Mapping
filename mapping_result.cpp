@@ -9,6 +9,7 @@ double Mapping_Result::calc_com_cost()
 	for(auto p:result) {
 		auto p_acg_n = p.first;
 		auto p_nag_n = p.second;
+		//to do some thing
 	}
 	return 0;
 }

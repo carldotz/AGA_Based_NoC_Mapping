@@ -13,7 +13,7 @@ public:
 	ACG() : Graph(){}
 	void add_from_tgff(TGFF_Manager &);
 	void add_node(ACG_Node::no_type n);
-	std::shared_ptr<ACG_Node> operator[](std::size_t);
+	std::shared_ptr<ACG_Node> operator[](std::size_t) const;
 
 private:
 };

@@ -11,12 +11,12 @@
 
 class Algorithms {
 public:
-	Algorithms(ACG *a,NAG *n) : acg(a),nag(n){}
+	Algorithms(const ACG *a,const NAG *n) : acg(a),nag(n){}
 	virtual ~Algorithms() {}
 	virtual void execute() = 0;
-
-	ACG *acg;
-	NAG *nag;
+protected:
+	const ACG *acg;
+	const NAG *nag;
 };
 
 #endif // ALGORITHMS_H

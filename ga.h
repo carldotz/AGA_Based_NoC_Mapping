@@ -8,7 +8,7 @@
 
 class GA : public Algorithms {
 public:
-	GA(ACG *a,NAG *n,size_t s,size_t mnig,double mi);
+	GA(const ACG *a,const NAG *n,size_t s,size_t mnig,double mi);
 	virtual void execute() override;
 
 protected:
@@ -19,7 +19,7 @@ protected:
 	virtual void restore_best();
 
 	std::vector<Individual> individuals;
-	Individual best = Individual(nag->size());
+	Individual best = Individual(acg,nag);
 	unsigned int size = 200;
 	unsigned int generation;
 	unsigned int no_improved_generation;

@@ -2,6 +2,7 @@
 #include <memory>
 
 using std::make_shared;
+using std::shared_ptr;
 
 void NAG::add_node(local x,local y)
 {
@@ -18,4 +19,9 @@ NAG::NAG(const line lx, const line ly) :lines_x(lx),lines_y(ly)
 			add_node(x++,y);
 		++y;
 	}
+}
+
+shared_ptr<NAG_Node> NAG::operator[](std::size_t i) const
+{
+	return std::dynamic_pointer_cast<NAG_Node>(nodes[i]);
 }
