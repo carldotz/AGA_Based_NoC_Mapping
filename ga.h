@@ -17,14 +17,15 @@ protected:
 	virtual void mutation();
 	virtual void store_best();
 	virtual void restore_best();
+	virtual void calc_fitness();
 
 	std::vector<Individual> individuals;
 	Individual best = Individual(acg,nag);
 	unsigned int size = 200;
-	unsigned int generation;
-	unsigned int no_improved_generation;
-	unsigned int max_no_improved_generation;
-	double min_improved;
+	unsigned int generation = 0;
+	unsigned int no_improved_generation = 0;
+	unsigned int max_no_improved_generation = 100;
+	double min_improved = 1E-10;
 };
 
 #endif // GA_H

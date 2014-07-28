@@ -1,5 +1,6 @@
 #include "ga.h"
 #include <vector>
+#include <cmath>
 #include <algorithm>
 
 GA::GA(const ACG *a,const NAG *n,size_t s,size_t mnig,double mi) :
@@ -13,7 +14,7 @@ GA::GA(const ACG *a,const NAG *n,size_t s,size_t mnig,double mi) :
 void GA::selection()
 {
 	static std::default_random_engine e;
-	static std::uniform_int_distribution<> u(0,individuals.size());
+	static std::uniform_int_distribution<> u(0,individuals.size()-1);
 	std::vector<Individual> new_individuals;
 	while(new_individuals.size() < individuals.size()) {
 		int i = u(e);
@@ -49,14 +50,38 @@ void GA::restore_best()
 	*(std::min_element(individuals.begin(),individuals.end())) = best;
 }
 
+void GA::calc_fitness()
+{
+	for(auto &a:individuals)
+	{
+		a.calc_fitness();
+	}
+}
+
 void GA::execute()
 {
+	std::cout << "+++++++++++++++++++++++Mapping++++++++++++++++++++++" << std::endl;
+
+	calc_fitness();
+	store_best();
 	while(no_improved_generation < max_no_improved_generation)
 	{
-		store_best();
 		selection();
 		crossover();
 		mutation();
+		calc_fitness();
 		restore_best();
+		Individual best_temp =
+				*(std::max_element(individuals.begin(),individuals.end()));
+		if(best_temp.get_fitness() - best.get_fitness() < min_improved)
+			++no_improved_generation;
+		else {
+			no_improved_generation = 0;
+			store_best();
+		}
+		std::cout << "Generation=" << generation++;
+		std::cout << "\tCost of Communication="
+				  << best_temp.get_fitness() << std::endl;
 	}
+	std::cout << this->best.get_phenotype();
 }

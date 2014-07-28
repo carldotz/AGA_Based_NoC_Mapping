@@ -11,7 +11,6 @@ public:
 	void add_edge(std::shared_ptr<ACG_Node> target,float communication) {
 		edge.insert({target,communication});
 	}
-private:
 	std::map<std::shared_ptr<ACG_Node>, float> edge;
 };
 

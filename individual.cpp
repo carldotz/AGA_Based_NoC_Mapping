@@ -10,8 +10,15 @@ Individual::Individual(const ACG *a,const NAG *n):
 	for(size_t i = 0;i<chromosome_size;++i)
 	{
 		std::uniform_int_distribution<unsigned> u(1,i+1);
+//		size_t n = u(e);
 		*(chromosome + i) = u(e);
+//		*(chromosome + i) = n;
 	}
+}
+
+Individual::~Individual()
+{
+	delete []chromosome;
 }
 
 //Individual::genetic* Individual::code(Mapping_Result)
@@ -36,8 +43,9 @@ Mapping_Result Individual::decode(Individual::genetic*)
 	for(size_t i=0;i<chromosome_size;++i)
 	{
 		if(*(temp+i)<real_genetic_size)
-			result.result.insert({(*nag)[i],(*acg)[*(temp+i)]});
+			result.result.insert({(*acg)[*(temp+i)],(*nag)[i]});
 	}
+	result.calc_com_cost();
 	delete [] temp;
 	return result;
 }
@@ -77,8 +85,9 @@ void Individual::calc_fitness()
 }
 
 Individual::Individual(const Individual &srouce):
-	fitness(srouce.fitness),chromosome_size(srouce.chromosome_size),
+	fitness(srouce.fitness),acg(srouce.acg),nag(srouce.nag),
 	real_genetic_size(srouce.real_genetic_size),
+	chromosome_size(srouce.chromosome_size),
 	chromosome(new genetic[chromosome_size]),phenotype(srouce.phenotype)
 {
 	std::copy(srouce.chromosome,srouce.chromosome + chromosome_size,chromosome);
@@ -87,12 +96,14 @@ Individual::Individual(const Individual &srouce):
 Individual & Individual::operator=(const Individual &srouce)
 {
 	fitness = srouce.fitness;
-	chromosome_size = srouce.chromosome_size;
+	acg = srouce.acg;
+	nag = srouce.nag;
 	real_genetic_size = srouce.real_genetic_size;
-	delete chromosome;
+	chromosome_size = srouce.chromosome_size;
+	delete []chromosome;
 	chromosome = new genetic[chromosome_size];
-	phenotype = srouce.phenotype;
 	std::copy(srouce.chromosome,srouce.chromosome + chromosome_size,chromosome);
+	phenotype = srouce.phenotype;
 	return *this;
 }
 

@@ -25,7 +25,7 @@ public:
 	{
 		std::system("rm ACG.tgff");
 		std::system("rm ACG.tgffopt");
-		std::system("rm ACG.eps");
+//		std::system("rm ACG.eps");
 		std::system("rm ACG.vcg");
 	}
 
