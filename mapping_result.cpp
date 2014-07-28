@@ -4,7 +4,7 @@
 
 using std::endl;
 
-double Mapping_Result::get_com_cost()
+double Mapping_Result::calc_com_cost()
 {
 	for(auto p:result) {
 		auto p_acg_n = p.first;
