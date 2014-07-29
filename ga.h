@@ -5,6 +5,7 @@
 #include "individual.h"
 #include <vector>
 #include <random>
+#include <memory>
 
 class GA : public Algorithms {
 public:
@@ -19,7 +20,7 @@ protected:
 	virtual void restore_best();
 	virtual void calc_fitness();
 
-	std::vector<Individual> individuals;
+	std::vector<std::shared_ptr<Individual>> individuals;
 	Individual best = Individual(acg,nag);
 	unsigned int size = 200;
 	unsigned int generation = 0;
