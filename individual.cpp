@@ -51,17 +51,39 @@ Mapping_Result Individual::decode(Individual::genetic*)
 }
 
 
+//void Individual::crossover(Individual &m)
+//{
+//	static std::default_random_engine e;
+//	static std::uniform_int_distribution<unsigned> u(0,chromosome_size-1);
+//	static std::bernoulli_distribution b(p_crossover);
+//	if(b(e))
+//	{
+//		unsigned int l = u(e);
+//		genetic * temp = new genetic[chromosome_size];
+//		std::copy(chromosome,chromosome+l,temp);
+//		std::copy(m.chromosome,m.chromosome+l,chromosome);
+//		std::copy(temp,temp+l,m.chromosome);
+//	}
+//}
+
 void Individual::crossover(Individual &m)
 {
 	static std::default_random_engine e;
 	static std::uniform_int_distribution<unsigned> u(0,chromosome_size-1);
 	static std::bernoulli_distribution b(p_crossover);
+	static std::bernoulli_distribution b_p(0.5);
 	if(b(e))
 	{
-		unsigned int l = u(e);
-		genetic * temp = chromosome;
-		std::copy(m.chromosome,m.chromosome+l,chromosome);
-		std::copy(temp,temp+l,m.chromosome);
+		genetic temp;
+		for(size_t i=0;i<chromosome_size;++i)
+		{
+			if(b_p(e))
+			{
+				temp = *(m.chromosome + i);
+				*(m.chromosome + i) = *(chromosome + i);
+				*(chromosome + i) = temp;
+			}
+		};
 	}
 }
 

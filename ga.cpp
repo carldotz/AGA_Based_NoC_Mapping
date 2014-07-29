@@ -2,6 +2,9 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include <fstream>
+
+using std::ofstream;
 
 GA::GA(const ACG *a,const NAG *n,size_t s,size_t mnig,double mi) :
 	Algorithms(a,n),size(s),max_no_improved_generation(mnig),min_improved(mi) {
@@ -83,5 +86,7 @@ void GA::execute()
 		std::cout << "\tCost of Communication="
 				  << best_temp.get_fitness() << std::endl;
 	}
-	std::cout << this->best.get_phenotype();
+	std::cout << this->best.get_phenotype() << std::endl;
+	ofstream out("data",ofstream::app);
+	out << this->best.get_phenotype().get_com_cost() << std::endl;
 }

@@ -24,7 +24,7 @@ protected:
 	unsigned int size = 200;
 	unsigned int generation = 0;
 	unsigned int no_improved_generation = 0;
-	unsigned int max_no_improved_generation = 100;
+	unsigned int max_no_improved_generation = 50;
 	double min_improved = 1E-10;
 };
 
