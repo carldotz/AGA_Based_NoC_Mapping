@@ -10,6 +10,9 @@
 class GA : public Algorithms {
 public:
 	GA(const ACG *a,const NAG *n,size_t s,size_t mnig,double mi);
+
+	GA(const ACG *a,const NAG *n,size_t mnig,double mi);
+
 	virtual void execute() override;
 
 protected:
@@ -19,6 +22,7 @@ protected:
 	virtual void store_best();
 	virtual void restore_best();
 	virtual void calc_fitness();
+	virtual void add_individual();
 
 	std::vector<std::shared_ptr<Individual>> individuals;
 	Individual best = Individual(acg,nag);

@@ -9,8 +9,17 @@ using std::ofstream;
 using std::make_shared;
 using std::shared_ptr;
 
-GA::GA(const ACG *a,const NAG *n,size_t s,size_t mnig,double mi) :
-	Algorithms(a,n),size(s),max_no_improved_generation(mnig),min_improved(mi) {
+GA::GA(const ACG *a,const NAG *n,size_t s,size_t mnig,double mi):
+		Algorithms(a,n),size(s),max_no_improved_generation(mnig),
+		min_improved(mi) {
+		add_individual();
+}
+
+GA::GA(const ACG *a,const NAG *n,size_t mnig,double mi):
+	Algorithms(a,n),max_no_improved_generation(mnig),min_improved(mi){}
+
+void GA::add_individual()
+{
 	while(individuals.size() < size)
 	{
 		individuals.push_back(make_shared<Individual>(acg,nag));
