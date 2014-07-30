@@ -2,6 +2,7 @@
 #define AGA_H
 
 #include "ga.h"
+#include "aga_individual.h"
 class AGA : public GA
 {
 public:
@@ -13,7 +14,6 @@ public:
 	AGA(ACG *a,NAG *n,size_t mnig,double mi) :
 		GA(a,n,mnig,mi) {}
 	virtual void execute() override;
-
 	void set_k(float,float);
 
 protected:
@@ -22,11 +22,16 @@ protected:
 	virtual double calc_max_fitness();
 	virtual	double calc_avg_fitness();
 
+	virtual void store_best() override;
+	virtual void restore_best() override;
+
 	virtual	void update_individuals_paremeter();
 	virtual	void update_individuals_k_paremeter();
 
 	double max_fitness = 0;
 	double avg_fitness = 0;
+
+	AGA_Individual best_aga_individual = AGA_Individual(acg,nag);
 
 	float k1;
 	float k3;

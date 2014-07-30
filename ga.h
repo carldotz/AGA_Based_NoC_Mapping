@@ -25,7 +25,7 @@ protected:
 	virtual void add_individual();
 
 	std::vector<std::shared_ptr<Individual>> individuals;
-	Individual best = Individual(acg,nag);
+	Individual best_individual = Individual(acg,nag);
 	unsigned int size = 200;
 	unsigned int generation = 0;
 	unsigned int no_improved_generation = 0;

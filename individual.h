@@ -16,7 +16,6 @@ public:
 	Individual& operator=(const Individual &);
 	virtual ~Individual();
 
-//	virtual genetic* code(Mapping_Result);
 	virtual Mapping_Result decode(genetic*);
 	virtual void crossover(Individual &);
 	virtual void mutation();

@@ -29,8 +29,16 @@ void GA::add_individual()
 void GA::selection()
 {
 	static std::default_random_engine e;
-	static std::uniform_int_distribution<> u(0,individuals.size()-1);
+	std::uniform_int_distribution<> u(0,individuals.size()-1);
 	std::vector<shared_ptr<Individual>> new_individuals;
+//	//
+//	Individual m0(**std::max_element(individuals.begin(),individuals.end(),
+//					[](const shared_ptr<Individual> &a,
+//						const shared_ptr<Individual> &b)
+//						  {return *a < *b;}));
+//	shared_ptr<Individual> max_i0 = make_shared<Individual>(m0);
+//	new_individuals.push_back(max_i0);
+//	//
 	while(new_individuals.size() < individuals.size()) {
 		int i = u(e);
 		int j = u(e);
@@ -59,7 +67,7 @@ void GA::mutation()
 
 void GA::store_best()
 {
-	best = **(std::max_element(individuals.begin(),individuals.end(),
+	best_individual = **(std::max_element(individuals.begin(),individuals.end(),
 				[](const shared_ptr<Individual> &a,
 					const shared_ptr<Individual> &b)
 						{return *a < *b;}));
@@ -70,7 +78,7 @@ void GA::restore_best()
 	**(std::min_element(individuals.begin(),individuals.end(),
 		[] (const shared_ptr<Individual> &a,
 			const shared_ptr<Individual> &b)
-			{return *a < *b;})) = best;
+			{return *a < *b;})) = best_individual;
 }
 
 void GA::calc_fitness()
@@ -93,23 +101,28 @@ void GA::execute()
 		crossover();
 		mutation();
 		calc_fitness();
-		restore_best();
 		Individual best_temp =
 				**(std::max_element(individuals.begin(),individuals.end(),
 								[](const shared_ptr<Individual> &a,
 									const shared_ptr<Individual> &b)
 										{return *a < *b;}));
-		if(best_temp.get_fitness() - best.get_fitness() < min_improved)
+
+		if(best_temp.get_fitness() < best_individual.get_fitness())
+		{
+			restore_best();
+			++no_improved_generation;
+		} else if(best_temp.get_fitness() - best_individual.get_fitness() < min_improved)
 			++no_improved_generation;
 		else {
 			no_improved_generation = 0;
 			store_best();
 		}
+
 		std::cout << "Generation=" << generation++;
 		std::cout << "\tCost of Communication="
-				  << best_temp.get_fitness() << std::endl;
+				  << best_individual.get_fitness() << std::endl;
 	}
-	std::cout << this->best.get_phenotype() << std::endl;
+	std::cout << this->best_individual.get_phenotype() << std::endl;
 	ofstream out("ga_data",ofstream::app);
-	out << this->best.get_phenotype().get_com_cost() << std::endl;
+	out << generation << "\t" << this->best_individual.get_phenotype().get_com_cost() << std::endl;
 }

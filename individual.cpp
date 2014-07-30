@@ -10,9 +10,7 @@ Individual::Individual(const ACG *a,const NAG *n):
 	for(size_t i = 0;i<chromosome_size;++i)
 	{
 		std::uniform_int_distribution<unsigned> u(1,i+1);
-//		size_t n = u(e);
 		*(chromosome + i) = u(e);
-//		*(chromosome + i) = n;
 	}
 }
 
@@ -20,12 +18,6 @@ Individual::~Individual()
 {
 	delete []chromosome;
 }
-
-//Individual::genetic* Individual::code(Mapping_Result)
-//{
-//	//to do something;
-//	return nullptr;
-//}
 
 Mapping_Result Individual::decode(Individual::genetic*)
 {
@@ -51,27 +43,12 @@ Mapping_Result Individual::decode(Individual::genetic*)
 }
 
 
-//void Individual::crossover(Individual &m)
-//{
-//	static std::default_random_engine e;
-//	static std::uniform_int_distribution<unsigned> u(0,chromosome_size-1);
-//	static std::bernoulli_distribution b(p_crossover);
-//	if(b(e))
-//	{
-//		unsigned int l = u(e);
-//		genetic * temp = new genetic[chromosome_size];
-//		std::copy(chromosome,chromosome+l,temp);
-//		std::copy(m.chromosome,m.chromosome+l,chromosome);
-//		std::copy(temp,temp+l,m.chromosome);
-//	}
-//}
-
 void Individual::crossover(Individual &m)
 {
 	static std::default_random_engine e;
-	static std::uniform_int_distribution<unsigned> u(0,chromosome_size-1);
-	static std::bernoulli_distribution b(p_crossover);
-	static std::bernoulli_distribution b_p(0.5);
+	std::uniform_int_distribution<unsigned> u(0,chromosome_size-1);
+	std::bernoulli_distribution b(p_crossover);
+	std::bernoulli_distribution b_p(0.5);
 	if(b(e))
 	{
 		genetic temp;
@@ -90,8 +67,8 @@ void Individual::crossover(Individual &m)
 void Individual::mutation()
 {
 	static std::default_random_engine e;
-	static std::uniform_int_distribution<unsigned> u(0,chromosome_size-1);
-	static std::bernoulli_distribution b(p_mutation);
+	std::uniform_int_distribution<unsigned> u(0,chromosome_size-1);
+	std::bernoulli_distribution b(p_mutation);
 	if(b(e))
 	{
 		unsigned int l = u(e);

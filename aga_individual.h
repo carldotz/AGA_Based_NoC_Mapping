@@ -20,9 +20,9 @@ public:
 	virtual void set_k_parameter(float, float);
 
 protected:
-	float k1_p_crossover = 0.6;
+	float k1_p_crossover = 1.0;
 	float k2_p_crossover = 1.0;
-	float k3_p_mutation = 0.1;
+	float k3_p_mutation = 0.5;
 	float k4_p_mutation = 0.5;
 	double max_fitness = 0;
 	double avg_fitness = 0;
