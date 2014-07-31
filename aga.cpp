@@ -18,7 +18,7 @@ void AGA::add_individual()
 
 void AGA::selection()
 {
-	static std::default_random_engine e;
+	std::default_random_engine e(seed);
 	std::uniform_int_distribution<> u(0,individuals.size()-1);
 	std::vector<shared_ptr<Individual>> new_individuals;
 //	//
@@ -55,7 +55,8 @@ void AGA::store_best()
 
 void AGA::restore_best()
 {
-	*std::dynamic_pointer_cast<AGA_Individual>(*std::min_element(individuals.begin(),individuals.end(),
+	*std::dynamic_pointer_cast<AGA_Individual>(
+		*std::min_element(individuals.begin(),individuals.end(),
 		[] (const shared_ptr<Individual> &a,
 			const shared_ptr<Individual> &b)
 			{return *a < *b;})) = best_aga_individual;
@@ -114,7 +115,6 @@ void AGA::execute()
 	while(no_improved_generation < max_no_improved_generation)
 	{
 		double max_fit = max_fitness;
-		update_individuals_paremeter();
 		selection();
 		update_individuals_paremeter();
 
@@ -133,9 +133,10 @@ void AGA::execute()
 //			throw std::logic_error("logic");
 
 		if(max_fit > max_fitness)
+		{
 			restore_best();
 			++no_improved_generation;
-		if(calc_max_fitness() - max_fit < min_improved)
+		} else if(calc_max_fitness() - max_fit < min_improved)
 			++no_improved_generation;
 		else {
 			store_best();

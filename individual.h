@@ -41,6 +41,7 @@ protected:
 	Mapping_Result phenotype;
 	float p_crossover = 0.8;
 	float p_mutation = 0.2;
+	int seed = 1;
 };
 
 #endif // INDIVIDUAL_H

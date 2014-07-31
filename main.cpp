@@ -24,11 +24,11 @@ void debug_aga(ACG *acg,NAG *nag)
 
 void aga_ga(ACG *acg,NAG *nag)
 {
-//	for(int i=0;i<100;i++)
-//	{
-//		GA ga(acg,nag,200,100,1E-10);
-//		ga.execute();
-//	}
+	for(int i=0;i<100;i++)
+	{
+		GA ga(acg,nag,200,100,1E-10);
+		ga.execute();
+	}
 	for(int i=0;i<100;++i)
 	{
 		AGA aga(acg,nag,200,100,1E-10);

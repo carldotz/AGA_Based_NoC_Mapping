@@ -6,7 +6,7 @@ Individual::Individual(const ACG *a,const NAG *n):
 	real_genetic_size(acg->size())
 {
 	chromosome = new genetic[chromosome_size];
-	static std::default_random_engine e;
+	static std::default_random_engine e(seed);
 	for(size_t i = 0;i<chromosome_size;++i)
 	{
 		std::uniform_int_distribution<unsigned> u(1,i+1);
@@ -45,8 +45,8 @@ Mapping_Result Individual::decode(Individual::genetic*)
 
 void Individual::crossover(Individual &m)
 {
-	static std::default_random_engine e;
-	std::uniform_int_distribution<unsigned> u(0,chromosome_size-1);
+	static std::default_random_engine e(seed);
+//	std::uniform_int_distribution<unsigned> u(0,chromosome_size-1);
 	std::bernoulli_distribution b(p_crossover);
 	std::bernoulli_distribution b_p(0.5);
 	if(b(e))
@@ -66,7 +66,7 @@ void Individual::crossover(Individual &m)
 
 void Individual::mutation()
 {
-	static std::default_random_engine e;
+	static std::default_random_engine e(seed);
 	std::uniform_int_distribution<unsigned> u(0,chromosome_size-1);
 	std::bernoulli_distribution b(p_mutation);
 	if(b(e))

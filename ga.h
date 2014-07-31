@@ -31,6 +31,8 @@ protected:
 	unsigned int no_improved_generation = 0;
 	unsigned int max_no_improved_generation = 50;
 	double min_improved = 1E-10;
+
+	int seed = 1;
 };
 
 #endif // GA_H

@@ -28,7 +28,7 @@ void GA::add_individual()
 
 void GA::selection()
 {
-	static std::default_random_engine e;
+	static std::default_random_engine e(seed);
 	std::uniform_int_distribution<> u(0,individuals.size()-1);
 	std::vector<shared_ptr<Individual>> new_individuals;
 //	//
