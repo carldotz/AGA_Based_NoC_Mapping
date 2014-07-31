@@ -118,11 +118,11 @@ void AGA::execute()
 		selection();
 		update_individuals_paremeter();
 
-//		if(max_fit > max_fitness)
-//		{
-//			restore_best();
-//			update_individuals_paremeter();
-//		}
+		if(max_fit > max_fitness)
+		{
+			restore_best();
+			update_individuals_paremeter();
+		}
 
 		crossover();
 		update_individuals_paremeter();
@@ -154,6 +154,8 @@ void AGA::execute()
 		std::cout << "Generation=" << generation++;
 		std::cout << "\tFitness="
 				  << max_fitness << std::endl;
+		ofstream out("aga_data",ofstream::app);
+		out << generation << "\t" << (1.0/max_fitness) << std::endl;
 	}
 	std::cout << "++++++++++++++++++++++++Best++++++++++++++++++++++++" << std::endl;
 	std::cout << (1.0/max_fitness) << "\n"<< std::endl;

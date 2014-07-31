@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <fstream>
 #include <memory>
+#include <iostream>
 
 using std::ofstream;
 using std::make_shared;
@@ -121,6 +122,9 @@ void GA::execute()
 		std::cout << "Generation=" << generation++;
 		std::cout << "\tCost of Communication="
 				  << best_individual.get_fitness() << std::endl;
+
+		ofstream out("ga_data",ofstream::app);
+		out << generation << "\t" << this->best_individual.get_phenotype().get_com_cost() << std::endl;
 	}
 	std::cout << this->best_individual.get_phenotype() << std::endl;
 	ofstream out("ga_data",ofstream::app);
