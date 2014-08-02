@@ -13,7 +13,7 @@ public:
 
 	GA(const ACG *a,const NAG *n,size_t mnig,double mi);
 
-	virtual void execute() override;
+	virtual double execute(double avg[]) override;
 
 protected:
 	virtual void selection();

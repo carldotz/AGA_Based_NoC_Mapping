@@ -17,7 +17,7 @@ public:
 
 	virtual void set_global_parameter(double, double);
 
-	virtual void set_k_parameter(float, float);
+	virtual void set_k_parameter(float, float, float, float);
 
 protected:
 	float k1_p_crossover = 1.0;

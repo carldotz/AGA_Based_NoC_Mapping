@@ -90,13 +90,14 @@ void GA::calc_fitness()
 	}
 }
 
-void GA::execute()
+double GA::execute(double avg[])
 {
 	std::cout << "+++++++++++++++++++++++Mapping++++++++++++++++++++++" << std::endl;
 
 	calc_fitness();
 	store_best();
-	while(no_improved_generation < max_no_improved_generation)
+//	while(no_improved_generation < max_no_improved_generation)
+	while(generation < 1000)
 	{
 		selection();
 		crossover();
@@ -122,11 +123,12 @@ void GA::execute()
 		std::cout << "Generation=" << generation++;
 		std::cout << "\tCost of Communication="
 				  << best_individual.get_fitness() << std::endl;
-
+		avg[generation-1] = this->best_individual.get_phenotype().get_com_cost();
 		ofstream out("ga_data",ofstream::app);
 		out << generation << "\t" << this->best_individual.get_phenotype().get_com_cost() << std::endl;
 	}
 	std::cout << this->best_individual.get_phenotype() << std::endl;
-	ofstream out("ga_data",ofstream::app);
-	out << generation << "\t" << this->best_individual.get_phenotype().get_com_cost() << std::endl;
+//	ofstream out("ga_data",ofstream::app);
+//	out << generation << "\t" << this->best_individual.get_phenotype().get_com_cost() << std::endl;
+	return this->best_individual.get_phenotype().get_com_cost();
 }

@@ -9,65 +9,147 @@ void clear_out_file()
 {
 	std::ofstream out_ga("ga_data");
 	out_ga << "ga" << std::endl;
-	out_ga.close();
 	std::ofstream out_aga("aga_data");
 	out_aga << "aga" << std::endl;
-	out_aga.close();
+	std::ofstream out_ga_aga("ga_aga");
+	out_ga_aga << " " << std::endl;
+	std::ofstream out_ga_avg("ga_avg");
+	out_ga_avg << " " << std::endl;
+	std::ofstream out_aga_avg("aga_avg");
+	out_aga_avg << " " << std::endl;
 }
 
-void debug_aga(ACG *acg,NAG *nag)
-{
-	AGA aga(acg,nag,200,100,1E-10);
-	aga.set_k(1,0.5);
-	aga.execute();
-}
+//void debug_aga(ACG *acg,NAG *nag)
+//{
+//	AGA aga(acg,nag,200,100,1E-10);
+//	aga.set_k(0.9,0.6,0.2,0.01);
+//	aga.execute();
+//}
 
 void aga_ga(ACG *acg,NAG *nag)
 {
-//	for(int i=0;i<20;i++)
-//	{
-//		GA ga(acg,nag,200,100,1E-10);
-//		ga.execute();
-//	}
-	for(int i=0;i<10;++i)
+	double ga_s = 0;
+	double ga_a[100][1000];
+	for(int i=0;i<100;i++)
+	{
+		GA ga(acg,nag,200,100,1E-10);
+		ga_s += (ga.execute(ga_a[i]));
+	}
+	double aga_s = 0;
+	double aga_a[100][1000];
+	for(int i=0;i<100;++i)
 	{
 		AGA aga(acg,nag,200,100,1E-10);
-		aga.set_k(0.6,0.4);
-		aga.execute();
+		aga.set_k(0.9,0.6,0.2,0.01);
+		aga_s += (aga.execute(aga_a[i]));
 	}
-}
 
-void aga_parameter_scan(ACG *acg,NAG *nag)
-{
-	for(float k1=0.1;k1<1;k1+=0.1)
+	std::ofstream out_ga("ga_avg",std::fstream::app);
+	for(int i=0;i<1000;++i)
 	{
-		for(float k3=0.1;k3<1;k3+=0.1)
+		double avg = 0;
+		for(int j=0;j<100;++j)
 		{
-			std::ofstream out_aga("aga_data",std::ofstream::app);
-			out_aga << "************************\n"
-					<< "k1=" << k1 << ",k3=" << k3
-					<< "\n************************" << std::endl;
-			out_aga.close();
-			for(int i=0;i<100;i++)
-			{
-				AGA aga(acg,nag,200,100,1E-10);
-				aga.set_k(k1,k3);
-				aga.execute();
-			}
+			avg += ga_a[j][i];
 		}
+		out_ga << avg/100 << std::endl;
 	}
+
+	std::ofstream out_aga("aga_avg",std::fstream::app);
+	for(int i=0;i<1000;++i)
+	{
+		double avg = 0;
+		for(int j=0;j<100;++j)
+		{
+			avg += aga_a[j][i];
+		}
+		out_aga << avg/100 << std::endl;
+	}
+
+	std::ofstream out("ga_aga",std::fstream::app);
+	out << "ga:" << ga_s << std::endl;
+	out << "aga:" << aga_s << std::endl;
 }
 
-int main()
+void test1()
+{
+	ACG acg;
+	TGFF_Manager tm(&acg);
+	tm.change_properties("seed", "10");
+	acg.add_from_tgff(tm);
+	NAG nag(7,7);
+	aga_ga(&acg,&nag);
+}
+
+void test2()
+{
+	ACG acg;
+	TGFF_Manager tm(&acg);
+	tm.change_properties("seed", "0");
+	acg.add_from_tgff(tm);
+	NAG nag(2,3);
+	aga_ga(&acg,&nag);
+}
+
+void test3()
+{
+	ACG acg;
+	TGFF_Manager tm(&acg);
+	tm.change_properties("seed", "2");
+	acg.add_from_tgff(tm);
+	NAG nag(4,5);
+	aga_ga(&acg,&nag);
+}
+
+void test4()
 {
 	ACG acg;
 	TGFF_Manager tm(&acg);
 	tm.change_properties("seed", "2");
 	acg.add_from_tgff(tm);
 	NAG nag(8,8);
-	clear_out_file();
-//	debug_aga(&acg,&nag);
 	aga_ga(&acg,&nag);
-//	aga_parameter_scan(&acg,&nag);
+}
+
+void test5()
+{
+	ACG acg;
+	TGFF_Manager tm(&acg);
+	tm.change_properties("seed", "8");
+	acg.add_from_tgff(tm);
+	NAG nag(7,7);
+	aga_ga(&acg,&nag);
+}
+
+void test6()
+{
+	ACG acg;
+	TGFF_Manager tm(&acg);
+	tm.change_properties("seed", "11");
+	acg.add_from_tgff(tm);
+	NAG nag(5,4);
+	aga_ga(&acg,&nag);
+}
+
+void test7()
+{
+	ACG acg;
+	TGFF_Manager tm(&acg);
+	tm.change_properties("seed", "72");
+	acg.add_from_tgff(tm);
+	NAG nag(8,8);
+	aga_ga(&acg,&nag);
+}
+
+int main()
+{
+	clear_out_file();
+//	test1();
+//	test2();
+//	test3();
+//	test4();
+	test5();
+	test6();
+	test7();
 	return 0;
 }

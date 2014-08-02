@@ -13,7 +13,7 @@ class Algorithms {
 public:
 	Algorithms(const ACG *a,const NAG *n) : acg(a),nag(n){}
 	virtual ~Algorithms() {}
-	virtual void execute() = 0;
+	virtual double execute(double avg[]) = 0;
 protected:
 	const ACG *acg;
 	const NAG *nag;

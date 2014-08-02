@@ -39,8 +39,8 @@ protected:
 	size_t chromosome_size = 0;
 	genetic * chromosome;
 	Mapping_Result phenotype;
-	float p_crossover = 0.8;
-	float p_mutation = 0.2;
+	float p_crossover = 0.9;
+	float p_mutation = 0.01;
 	int seed = 1;
 };
 

@@ -96,33 +96,36 @@ void AGA::update_individuals_k_paremeter()
 
 	for(auto &spi:individuals)
 	{
-		std::dynamic_pointer_cast<AGA_Individual>(spi)->set_k_parameter(k1,k3);
+		std::dynamic_pointer_cast<AGA_Individual>(spi)->set_k_parameter(k1,k2,k3,k4);
 	}
 }
 
-void AGA::set_k(float _k1,float _k3)
+void AGA::set_k(float _k1,float _k2, float _k3, float _k4)
 {
 	k1 = _k1;
+	k2 = _k2;
 	k3 = _k3;
+	k4 = _k4;
 	update_individuals_k_paremeter();
 }
 
-void AGA::execute()
+double AGA::execute(double avg[])
 {
 	std::cout << "+++++++++++++++++++++++Mapping++++++++++++++++++++++" << std::endl;
 	update_individuals_paremeter();
 	store_best();
-	while(no_improved_generation < max_no_improved_generation)
+//	while(no_improved_generation < max_no_improved_generation)
+	while(generation < 1000)
 	{
 		double max_fit = max_fitness;
 		selection();
 		update_individuals_paremeter();
 
-		if(max_fit > max_fitness)
-		{
-			restore_best();
-			update_individuals_paremeter();
-		}
+//		if(max_fit > max_fitness)
+//		{
+//			restore_best();
+//			update_individuals_paremeter();
+//		}
 
 		crossover();
 		update_individuals_paremeter();
@@ -154,11 +157,13 @@ void AGA::execute()
 		std::cout << "Generation=" << generation++;
 		std::cout << "\tFitness="
 				  << max_fitness << std::endl;
+		avg[generation-1] = (1.0/max_fitness);
 		ofstream out("aga_data",ofstream::app);
 		out << generation << "\t" << (1.0/max_fitness) << std::endl;
 	}
 	std::cout << "++++++++++++++++++++++++Best++++++++++++++++++++++++" << std::endl;
 	std::cout << (1.0/max_fitness) << "\n"<< std::endl;
-	ofstream out("aga_data",ofstream::app);
-	out << generation << "\t" << (1.0/max_fitness) << std::endl;
+//	ofstream out("aga_data",ofstream::app);
+//	out << generation << "\t" << (1.0/max_fitness) << std::endl;
+	return (1.0/max_fitness);
 }

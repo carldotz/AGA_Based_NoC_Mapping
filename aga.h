@@ -13,8 +13,8 @@ public:
 	}
 	AGA(ACG *a,NAG *n,size_t mnig,double mi) :
 		GA(a,n,mnig,mi) {}
-	virtual void execute() override;
-	void set_k(float,float);
+	virtual double execute(double avg[]) override;
+	void set_k(float,float,float,float);
 
 protected:
 	virtual void add_individual() override;
@@ -34,7 +34,9 @@ protected:
 	AGA_Individual best_aga_individual = AGA_Individual(acg,nag);
 
 	float k1;
+	float k2;
 	float k3;
+	float k4;
 };
 
 #endif // AGA_H
